@@ -1,0 +1,17 @@
+---
+- hosts: control
+  become: true
+  tasks:
+    - name: clone git repo
+      git:
+        repo: 'https://github.com/rtyley/small-test-repo.git'
+        dest: ./srv/checkout
+        clone: yes
+        update: yes
+
+    - name: install tools
+      apt: name={{item}} state=present update_cache=yes
+      with_items:
+        - curl
+        - python-httplib2
+    
